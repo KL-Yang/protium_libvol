@@ -8,10 +8,15 @@
 
 #include "vol_i.h"
 #include "vol_open.c"
+#include "vol_getdim.c"
+#include "vol_getvol.c"
 #include "vol_close.c"
 
 static PyMethodDef pyvolMethods[] = {
     {"open",      pyvol_open,     METH_VARARGS, "Open a Seismic Unix dataset."},
+    {"getdim",    pyvol_getdim,   METH_VARARGS, "Get dimension."},
+    {"gety",      pyvol_gety,     METH_VARARGS, "Get y dimension."},
+    {"getvol",    pyvol_getvol,   METH_VARARGS, "Get 3D volume."},
     {"close",     pyvol_close,    METH_VARARGS, "Close SU dataset."},
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
