@@ -1,0 +1,40 @@
+[
+{
+    "libvol" : {
+        "type"    : "static",
+        "make"    : {
+            "srcs"     : ["libvol.c"],
+            "cflags"   : ["`pkg-config --cflags glib-2.0` -O2 -fPIC",
+                          "`pkg-config --cflags python3`",
+                          "-I${PROTIUM_HOME}/include",
+                          "-W -Wall"],
+            "libs"     : ["-lm", "-lpthread"],
+            "pkgs"     : ["glib-2.0", "python3"],
+            "pt-pkgs"  : [],
+            "preamble" : [],
+            "epilogue" : []
+        },
+        "install" : {
+            "header" : [],
+            "libs"   : []
+        },
+        "config"  : {
+            "cflags" : "",
+            "libs"   : ""
+        }
+    }   
+},
+{
+    "libpyvol" : {
+        "type"    : "python",
+        "make"    : {
+            "srcs"      : ["libpyvol.c"],
+            "cflags"    : ["-g", "-std=gnu99", "-I${PROTIUM_HOME}/include"],
+            "pkgs"      : ["glib-2.0", "python3"],
+            "libs"      : ["-L${PROTIUM_HOME}/lib -lptcomm -lpyptcomm"]
+        },
+        "install" : {},
+        "usage"   : {}
+    }   
+}
+]

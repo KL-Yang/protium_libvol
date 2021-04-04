@@ -1,0 +1,6 @@
+create a very simple protium volume format dataset.
+
+fixed length header, optional rectangle map,
+seismic attributes.
+
+This is used for debug, and development of protium_viewer.
