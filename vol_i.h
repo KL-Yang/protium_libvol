@@ -9,7 +9,11 @@
 #include <fcntl.h>
 #include "libvol.h"
 
-#define VOL_API_LEVEL   0
+#define VOL_API_LEVEL       0
+#define VOL_HEAD_SIZE       128     //FOR DEBUG SAFTY
+
+//in memory flag
+#define VOL_FLAG_WRITE      (1<<0)
 /**
  * Currently level=0, struct is fixed to 128byte
  * */

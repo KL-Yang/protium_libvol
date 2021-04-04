@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include "vol_i.h"
+#include "vol_utility.c"
 #include "vol_open.c"
 #include "vol_getdim.c"
 #include "vol_getvol.c"

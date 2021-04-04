@@ -7,9 +7,12 @@
 #define LIBVOL_PYTHON
 
 #include "vol_i.h"
+#include "vol_utility.c"
 #include "vol_open.c"
 #include "vol_getdim.c"
 #include "vol_getvol.c"
+#include "vol_setdim.c"
+#include "vol_setvol.c"
 #include "vol_close.c"
 
 static PyMethodDef pyvolMethods[] = {
@@ -17,6 +20,9 @@ static PyMethodDef pyvolMethods[] = {
     {"getdim",    pyvol_getdim,   METH_VARARGS, "Get dimension."},
     {"gety",      pyvol_gety,     METH_VARARGS, "Get y dimension."},
     {"getvol",    pyvol_getvol,   METH_VARARGS, "Get 3D volume."},
+    {"setdim",    pyvol_setdim,   METH_VARARGS, "Set dimension."},
+    {"setvol",    pyvol_setvol,   METH_VARARGS, "Set 3D volume."},
+    {"sety",      pyvol_sety,     METH_VARARGS, "Set y dimension."},
     {"close",     pyvol_close,    METH_VARARGS, "Close SU dataset."},
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
