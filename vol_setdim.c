@@ -1,6 +1,7 @@
 int vol_setdim(VOLID_t id, int ny, int nx, int nz)
 {
     protium_volid_t *vol = id;
+    vol->flag &= (~VOL_FLAG_WRITE);
     vol->header.ny = ny;
     vol->header.nx = nx;
     vol->header.nz = nz;
@@ -10,6 +11,7 @@ int vol_setdim(VOLID_t id, int ny, int nx, int nz)
 int vol_sety(VOLID_t id, float y0, float dy, int fy)
 {
     protium_volid_t *vol = id;
+    vol->flag &= (~VOL_FLAG_WRITE);
     vol->header.y0 = y0;
     vol->header.dy = dy;
     vol->header.yline0 = fy;
