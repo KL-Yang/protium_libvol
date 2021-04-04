@@ -23,12 +23,12 @@ int vol_close(VOLID_t id);
 /**
  * Get/Set geometry information of the volume.
  * */
-int vol_get_y(VOLID_t id, int *ny, float *y0, float *dy, int *fy);
-int vol_get_x(VOLID_t id, int *nx, float *x0, float *dx, int *fx);
-int vol_get_z(VOLID_t id, int *nz, float *z0, float *dz, int *fz);
-int vol_set_y(VOLID_t id, int ny, float y0, float dy, int fy);
-int vol_set_x(VOLID_t id, int nx, float x0, float dx, int fx);
-int vol_set_z(VOLID_t id, int nz, float z0, float dz, int fz);
+int vol_gety(VOLID_t id, float *y0, float *dy, int *fy);
+int vol_getx(VOLID_t id, float *x0, float *dx, int *fx);
+int vol_getz(VOLID_t id, float *z0, float *dz, int *fz);
+int vol_sety(VOLID_t id, float y0, float dy, int fy);
+int vol_setx(VOLID_t id, float x0, float dx, int fx);
+int vol_setz(VOLID_t id, float z0, float dz, int fz);
 
 /**
  * Partial read/write volume data
