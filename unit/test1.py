@@ -21,7 +21,7 @@ print("#ninst=",ninst,"nsamp=",nsamp)
 ##########################################################################
 # 2. write data to vl1 volume
 ##########################################################################
-vl1   = vol.open("xvol1.vol", vol.CREATE)
+vl1   = vol.open("xvol1p.vol", vol.CREATE)
 vol.setdim(vl1, 1, ninst, nsamp);
 vol.setvol(vl1, data)
 vol.close(vl1)
@@ -31,14 +31,14 @@ del data
 ##########################################################################
 # 3. read data from vl2 volume
 ##########################################################################
-vl2   = vol.open("xvol1.vol", vol.READONLY)
+vl2   = vol.open("xvol1p.vol", vol.READONLY)
 dim   = vol.getdim(vl2)
 dvol  = vol.getvol(vl2)
 vol.close(vl2)
 print("vl2-dim=", dim, " shape=", dvol.shape)
 
 ##########################################################################
-# 4. copy everything except trace from su1 to su2
+# 4. copy from vl2 to su2
 ##########################################################################
 su2   = su.open("model_test1py.su", su.CREATE)
 su.nsamp(su2, nsamp)
