@@ -19,6 +19,8 @@ static PyMethodDef pyvolMethods[] = {
     {"open",      pyvol_open,     METH_VARARGS, "Open a Seismic Unix dataset."},
     {"getdim",    pyvol_getdim,   METH_VARARGS, "Get dimension."},
     {"gety",      pyvol_gety,     METH_VARARGS, "Get y dimension."},
+    {"getx",      pyvol_getx,     METH_VARARGS, "Get x dimension."},
+    {"getz",      pyvol_getz,     METH_VARARGS, "Get z dimension."},
     {"getvol",    pyvol_getvol,   METH_VARARGS, "Get 3D volume."},
     {"setdim",    pyvol_setdim,   METH_VARARGS, "Set dimension."},
     {"setvol",    pyvol_setvol,   METH_VARARGS, "Set 3D volume."},

@@ -34,8 +34,6 @@ int vol_getz(VOLID_t id, float *z0, float *dz, int *iz0)
     return 0;
 }
 
-
-
 #ifdef LIBVOL_PYTHON
 /**
  * @brief Get dimension size of the volume
@@ -60,7 +58,7 @@ static PyObject * pyvol_getdim(PyObject __attribute__((unused)) *self, PyObject 
 
 /**
  * @brief Get dimension size of the volume
- *   (y0,dy,fy) = vol.gety(id)
+ *   (y0,dy,iy0) = vol.gety(id)
  * @param[in] id opaque object to access the volume
  * */
 static PyObject * pyvol_gety(PyObject __attribute__((unused)) *self, PyObject *args)
@@ -70,13 +68,42 @@ static PyObject * pyvol_gety(PyObject __attribute__((unused)) *self, PyObject *a
     PyArg_ParseTuple(args, "O", &db);
     id = PyCapsule_GetPointer(db, NULL);
     
-    int fy; float y0, dy;
-    vol_gety(id, &y0, &dy, &fy);
+    int iy0; float y0, dy;
+    vol_gety(id, &y0, &dy, &iy0);
     PyObject *oy0, *ody, *ofy;
     oy0 = PyFloat_FromDouble(y0);
     ody = PyFloat_FromDouble(dy);
-    ofy = PyLong_FromLong(fy);
+    ofy = PyLong_FromLong(iy0);
     return PyTuple_Pack(3, oy0, ody, ofy);
 }
-
+static PyObject * pyvol_getx(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db;
+    protium_volid_t *id;
+    PyArg_ParseTuple(args, "O", &db);
+    id = PyCapsule_GetPointer(db, NULL);
+    
+    int iy0; float y0, dy;
+    vol_getx(id, &y0, &dy, &iy0);
+    PyObject *oy0, *ody, *ofy;
+    oy0 = PyFloat_FromDouble(y0);
+    ody = PyFloat_FromDouble(dy);
+    ofy = PyLong_FromLong(iy0);
+    return PyTuple_Pack(3, oy0, ody, ofy);
+}
+static PyObject * pyvol_getz(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db;
+    protium_volid_t *id;
+    PyArg_ParseTuple(args, "O", &db);
+    id = PyCapsule_GetPointer(db, NULL);
+    
+    int iy0; float y0, dy;
+    vol_getz(id, &y0, &dy, &iy0);
+    PyObject *oy0, *ody, *ofy;
+    oy0 = PyFloat_FromDouble(y0);
+    ody = PyFloat_FromDouble(dy);
+    ofy = PyLong_FromLong(iy0);
+    return PyTuple_Pack(3, oy0, ody, ofy);
+}
 #endif
