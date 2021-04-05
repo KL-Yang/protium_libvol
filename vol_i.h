@@ -16,6 +16,9 @@
 #define VOL_FLAG_WRITE      (1<<0)
 /**
  * Currently level=0, struct is fixed to 128byte
+ * The reason to keep both dx and idx is that for a certain
+ * geometry setting, the volume may be decimated. 
+ * the original org_dx = dx/idx;
  * */
 #pragma pack(push)
 #pragma pack(1)
@@ -25,8 +28,9 @@ typedef struct vol_head_struct {
     int32_t     ny,nx,nz;
     float       y0,x0,z0;
     float       dy,dx,dz;
-    int32_t     iy0,ix0,iz0;
-    int32_t    _place_hold[19];
+    int32_t     iy0,ix0;
+    int16_t     iz0,idy,idx,idz;
+    int32_t    _place_hold[18];
 } vol_head_t;
 #pragma pack(pop)
 

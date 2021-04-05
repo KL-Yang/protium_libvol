@@ -1,6 +1,7 @@
 int vol_open(VOLID_t *id, const char *path, int flag)
 {
     protium_volid_t *vol = *id = calloc(1, sizeof(protium_volid_t));
+    vol_head_t *h = &vol->header;
     if(sizeof(vol_head_t)!=VOL_HEAD_SIZE) {
         printf("%s: Header setting inconsistent!\n", __func__);
         abort();
@@ -8,7 +9,10 @@ int vol_open(VOLID_t *id, const char *path, int flag)
     if(flag==VOL_CREATE) {
         vol->fid = open(path, O_RDWR|O_CREAT,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-        vol->header.level = VOL_API_LEVEL;
+        h->tag[0]='f';
+        h->tag[1]='d';
+        h->tag[2]='1';
+        h->level = VOL_API_LEVEL;
     } else {
         if((vol->fid=open(path, O_RDWR))<0) {
             printf("%s: failed to open(%s)!\n", __func__, path);
@@ -19,9 +23,10 @@ int vol_open(VOLID_t *id, const char *path, int flag)
             printf("%s: pread unfinished!\n", __func__);
             abort();
         }
-        if(vol->header.level>VOL_API_LEVEL) {
+        if(h->level>VOL_API_LEVEL || h->tag[0]!='f' 
+                || h->tag[1]!='d' || h->tag[2]!='1') {
             printf("%s: file was created by newer library?\n", 
-                __func__); abort();
+                    __func__); abort();
         }
         int64_t file_length, data_length;
         vol_head_t *h = &vol->header;
