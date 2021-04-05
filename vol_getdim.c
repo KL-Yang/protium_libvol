@@ -7,14 +7,34 @@ int vol_getdim(VOLID_t id, int *ny, int *nx, int *nz)
     return 0;
 }
 
-int vol_gety(VOLID_t id, float *y0, float *dy, int *fy)
+int vol_gety(VOLID_t id, float *y0, float *dy, int *iy0)
 {
     protium_volid_t *vol = id;
-    *y0 = vol->header.y0;
-    *dy = vol->header.dy;
-    *fy = vol->header.yline0;
+    *y0  = vol->header.y0;
+    *dy  = vol->header.dy;
+    *iy0 = vol->header.iy0;
     return 0;
 }
+
+int vol_getx(VOLID_t id, float *x0, float *dx, int *ix0)
+{
+    protium_volid_t *vol = id;
+    *x0  = vol->header.x0;
+    *dx  = vol->header.dx;
+    *ix0 = vol->header.ix0;
+    return 0;
+}
+
+int vol_getz(VOLID_t id, float *z0, float *dz, int *iz0)
+{
+    protium_volid_t *vol = id;
+    *z0  = vol->header.z0;
+    *dz  = vol->header.dz;
+    *iz0 = vol->header.iz0;
+    return 0;
+}
+
+
 
 #ifdef LIBVOL_PYTHON
 /**

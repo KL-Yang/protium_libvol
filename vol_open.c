@@ -1,9 +1,14 @@
 int vol_open(VOLID_t *id, const char *path, int flag)
 {
     protium_volid_t *vol = *id = calloc(1, sizeof(protium_volid_t));
+    if(sizeof(vol_head_t)!=VOL_HEAD_SIZE) {
+        printf("%s: Header setting inconsistent!\n", __func__);
+        abort();
+    }
     if(flag==VOL_CREATE) {
         vol->fid = open(path, O_RDWR|O_CREAT,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+        vol->header.level = VOL_API_LEVEL;
     } else {
         if((vol->fid=open(path, O_RDWR))<0) {
             printf("%s: failed to open(%s)!\n", __func__, path);

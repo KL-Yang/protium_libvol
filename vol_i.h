@@ -25,9 +25,8 @@ typedef struct vol_head_struct {
     int32_t     ny,nx,nz;
     float       y0,x0,z0;
     float       dy,dx,dz;
-    int32_t     yline0;
-    int32_t     xline0;
-    int32_t    _place_hold[20];
+    int32_t     iy0,ix0,iz0;
+    int32_t    _place_hold[19];
 } vol_head_t;
 #pragma pack(pop)
 
