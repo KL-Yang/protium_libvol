@@ -1,8 +1,10 @@
 import os, sys
 import numpy as np
 
-sys.path.insert(0, './module')
-sys.path.insert(0, '../protium_libsu/module')
+#protium_home=os.getenv('PROTIUM_HOME')
+#sys.path.insert(0, protium_home+'/pylib')
+sys.path.insert(0, '../module')
+sys.path.insert(0, '../../protium_libsu/module')
 import libpysu as su
 import libpyvol as vol
 
