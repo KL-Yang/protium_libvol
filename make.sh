@@ -5,6 +5,7 @@ cd build; rm -rf build; make all; cd ..
 #python3 test.py
 
 #note: only if success, should do this!!!
+cp build/build/lib.linux-*-3.?/libpyvol*.so "$PROTIUM_HOME/pylib/"
 cp libvol.h "$PROTIUM_HOME/include/protium/"
 cp build/libvol.a "$PROTIUM_HOME/lib"
 
