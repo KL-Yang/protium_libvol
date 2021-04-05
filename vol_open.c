@@ -9,7 +9,7 @@ int vol_open(VOLID_t *id, const char *path, int flag)
             printf("%s: failed to open(%s)!\n", __func__, path);
             abort();
         }
-        if(pread(vol->fid, &vol->header, 0, sizeof(vol_head_t))
+        if(pread(vol->fid, &vol->header, sizeof(vol_head_t), 0)
             !=sizeof(vol_head_t)) {
             printf("%s: pread unfinished!\n", __func__);
             abort();
@@ -21,7 +21,8 @@ int vol_open(VOLID_t *id, const char *path, int flag)
         int64_t file_length, data_length;
         vol_head_t *h = &vol->header;
         file_length = lseek(vol->fid, 0, SEEK_END);
-        data_length = sizeof(vol_head_t)+((int64_t)h->ny)*h->nx*h->nz;
+        data_length = sizeof(vol_head_t)
+            +((int64_t)h->ny)*h->nx*h->nz*sizeof(float);
         if(file_length!=data_length) {
             printf("%s: file length was unexpected!\n", __func__);
             abort();

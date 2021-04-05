@@ -5,7 +5,7 @@ int vol_getvol(VOLID_t id, float *data)
 {
     protium_volid_t *vol = id;
     vol_head_t *h = &vol->header;
-    int64_t data_size = ((int64_t)h->ny)*h->nx*h->nz;
+    int64_t data_size = ((int64_t)h->ny)*h->nx*h->nz*sizeof(float);
     int64_t data_read = pread(vol->fid, data, data_size, sizeof(vol_head_t));
     if(data_read!=data_size) {
         printf("%s: expect to read %ld but get %ld\n", __func__,

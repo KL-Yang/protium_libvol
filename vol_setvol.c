@@ -9,7 +9,7 @@ int vol_setvol(VOLID_t id, float *data)
 
     vol_head_t *h = &vol->header;
     int64_t data_size, data_read;
-    data_size = ((int64_t)h->ny)*h->nx*h->nz;
+    data_size = ((int64_t)h->ny)*h->nx*h->nz*sizeof(float);
     data_read = pwrite(vol->fid, data, data_size, sizeof(vol_head_t));
     if(data_read!=data_size) {
         printf("%s: expect to write %ld but write %ld\n", __func__,
@@ -39,8 +39,9 @@ static PyObject * pyvol_setvol(PyObject __attribute__((unused)) *self, PyObject 
     npy_intp *dims;
     nd = PyArray_NDIM((PyArrayObject*)data);
     dims = PyArray_DIMS((PyArrayObject*)data);
-    if(nd!=3 || dims[0]!=vol->header.ny || dims[1]!=vol->header.nx
-            || dims[2]!=vol->header.nz) {
+    vol_head_t *h = &vol->header;
+    if(((nd==3) && (dims[0]!=h->ny || dims[1]!=h->nx || dims[2]!=h->nz))
+            || ((nd==2) && (dims[0]!=h->ny*h->nx || dims[1]!=h->nz))) {
         printf("%s: array dimension is not correct!\n", __func__);
         abort();
     }
