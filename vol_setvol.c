@@ -1,7 +1,7 @@
 /**
  * Read the 3D volume and return ny*nx
  * */
-int vol_setvol(VOLID_t id, float *data)
+int vol_setvol(VOLID_t id, const float *data)
 {
     protium_volid_t *vol = id;
     if(!(vol->flag & VOL_FLAG_WRITE))
