@@ -12,7 +12,7 @@
 #include "vol_close.c"
 
 void 
-vol_export(const char *path, const float *vol, int ny, int nx, int nz)
+vol_export(const char *path, const void *vol, int ny, int nx, int nz)
 {
     VOLID_t id;
     vol_open(&id, path, VOL_CREATE);
@@ -22,7 +22,7 @@ vol_export(const char *path, const float *vol, int ny, int nx, int nz)
 }
 
 void
-vol_import(const char *path, float *vol, int ny, int nx, int nz)
+vol_import(const char *path, void *vol, int ny, int nx, int nz)
 {
     VOLID_t id; int my, mx, mz;
     vol_open(&id, path, VOL_READONLY);

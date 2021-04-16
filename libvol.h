@@ -23,8 +23,8 @@ int vol_close(VOLID_t id);
 /**
  * simplified debug interface.
  * */
-void vol_import(const char *path, float *vol, int ny, int nx, int nz);
-void vol_export(const char *path, const float *vol, int ny, int nx, int nz);
+void vol_import(const char *path, void *vol, int ny, int nx, int nz);
+void vol_export(const char *path, const void *vol, int ny, int nx, int nz);
 
 /**
  * Get/Set geometry information of the volume.
