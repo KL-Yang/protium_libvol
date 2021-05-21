@@ -1,19 +1,18 @@
 static void safe_pread(int fd, void *buf, size_t count, off_t offset)
 {
-    ssize_t read_size;
+    ssize_t io_size;
     while(count>0) {
-        read_size = pread(fd, buf, count, offset);
-        if(read_size==(-1)) {
+        io_size = pread(fd, buf, count, offset);
+        if(io_size==(-1)) {
             printf("%s: expect to read %ld but get %ld\n", 
-                    __func__, count, read_size);
+                    __func__, count, io_size);
             abort();
         }
-        buf    += read_size;
-        offset += read_size;
-        count  -= read_size;
+        buf    += io_size;
+        offset += io_size;
+        count  -= io_size;
     }
 }
-ssize_t pread(int fd, void *buf, size_t count, off_t offset);
 
 /**
  * Read the 3D volume and return ny*nx
