@@ -40,6 +40,6 @@ int vol_setz(VOLID_t id, float z0, float dz, int fz);
  * Partial read/write volume data
  * */
 int vol_pgetvol(VOLID_t id, void *vol, int first, int n);
-int vol_psetvol(VOLID_t id, void *vol, int first, int n);
+int vol_psetvol(VOLID_t id, const void *vol, int first, int n);
 
 #endif

@@ -30,6 +30,21 @@ int vol_setvol(VOLID_t id, const void *data)
     return h->ny*h->nx;
 }
 
+int vol_psetvol(VOLID_t id, const void *data, int first, int n)
+{
+    protium_volid_t *vol = id;
+    if(!(vol->flag & VOL_FLAG_WRITE))
+        vol_write_header(id);
+
+    int64_t data_size, file_seek;
+    vol_head_t *h = &vol->header;
+    assert(first+n<=h->ny*h->nx);
+    file_seek = sizeof(vol_head_t)+((int64_t)first)*h->nz*sizeof(float);
+    data_size = ((int64_t)n)*h->nz*sizeof(float);
+    safe_pwrite(vol->fid, data, data_size, file_seek);
+    return n;
+}
+
 #ifdef LIBVOL_PYTHON
 /**
  * @brief Read the whole volume and return as numpy array,
