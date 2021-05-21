@@ -7,7 +7,7 @@ int vol_open(VOLID_t *id, const char *path, int flag)
         abort();
     }
     if(flag==VOL_CREATE) {
-        vol->fid = open(path, O_RDWR|O_CREAT,
+        vol->fid = open(path, O_RDWR|O_CREAT|O_TRUNC,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
         h->tag[0]='f';
         h->tag[1]='d';
@@ -60,7 +60,8 @@ static PyObject * pyvol_open(PyObject __attribute__((unused)) *self, PyObject *a
         printf("%s: *ERROR* su_open(%s, %d) Failed\n", __func__, name, flag);
         return NULL;
     }
-    db = PyCapsule_New(id, NULL, NULL);
+    //db = PyCapsule_New(id, NULL, NULL);
+    db = pyvol_ptr2obj(id);
     return db;
 }
 #endif

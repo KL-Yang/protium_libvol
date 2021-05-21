@@ -20,7 +20,7 @@ static PyObject * pyvol_close(PyObject __attribute__((unused)) *self, PyObject *
     if(!PyArg_ParseTuple(args, "O", &db))
       return NULL;
 
-    id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     vol_close(id);
     Py_INCREF(Py_True);
     return Py_True;

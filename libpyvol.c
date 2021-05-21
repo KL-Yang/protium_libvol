@@ -1,5 +1,3 @@
-#define _GNU_SOURCE
-#define Py_USING_UNICODE
 #include <Python.h>
 #define  NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/arrayobject.h>
@@ -29,6 +27,7 @@ static PyMethodDef pyvolMethods[] = {
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
 
+#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef libpyvol = {
     PyModuleDef_HEAD_INIT,
     "libpyvol",   /* name of module */
@@ -55,3 +54,13 @@ PyMODINIT_FUNC PyInit_libpyvol(void)
     PyModule_AddIntConstant(m, "UPDATE",   VOL_UPDATE);
     return m;
 }
+#else
+PyMODINIT_FUNC initlibpyvol(void)
+{
+    PyObject *m = Py_InitModule("libpyvol", pyvolMethods);
+    import_array();
+    PyModule_AddIntConstant(m, "CREATE",   VOL_CREATE);
+    PyModule_AddIntConstant(m, "READONLY", VOL_READONLY);
+    PyModule_AddIntConstant(m, "UPDATE",   VOL_UPDATE);
+}
+#endif

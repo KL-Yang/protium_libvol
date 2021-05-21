@@ -45,7 +45,8 @@ static PyObject * pyvol_getdim(PyObject __attribute__((unused)) *self, PyObject 
     PyObject *db;
     protium_volid_t *id;
     PyArg_ParseTuple(args, "O", &db);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     int ny, nx, nz;
     vol_getdim(id, &ny, &nx, &nz);
@@ -66,7 +67,8 @@ static PyObject * pyvol_gety(PyObject __attribute__((unused)) *self, PyObject *a
     PyObject *db;
     protium_volid_t *id;
     PyArg_ParseTuple(args, "O", &db);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     int iy0; float y0, dy;
     vol_gety(id, &y0, &dy, &iy0);
@@ -81,7 +83,8 @@ static PyObject * pyvol_getx(PyObject __attribute__((unused)) *self, PyObject *a
     PyObject *db;
     protium_volid_t *id;
     PyArg_ParseTuple(args, "O", &db);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     int iy0; float y0, dy;
     vol_getx(id, &y0, &dy, &iy0);
@@ -96,7 +99,8 @@ static PyObject * pyvol_getz(PyObject __attribute__((unused)) *self, PyObject *a
     PyObject *db;
     protium_volid_t *id;
     PyArg_ParseTuple(args, "O", &db);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     int iy0; float y0, dy;
     vol_getz(id, &y0, &dy, &iy0);

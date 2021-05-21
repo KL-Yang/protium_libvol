@@ -13,3 +13,18 @@ static void
 safe_pread(int fd, void *buf, size_t count, off_t offset)
 {
 } */
+
+#ifdef LIBVOL_PYTHON
+
+#if PY_MAJOR_VERSION >=3 
+static PyObject *pyvol_ptr2obj(void *ptr)
+{ return PyCapsule_New(ptr, NULL, NULL); }
+static void *pyvol_obj2ptr(PyObject *obj)
+{ return PyCapsule_GetPointer(obj, NULL); }
+#else	//python2.6 in RHEL6
+static PyObject *pyvol_ptr2obj(void *ptr)
+{ return PyCObject_FromVoidPtr(ptr, NULL); }
+static void *pyvol_obj2ptr(PyObject *obj)
+{ return PyCObject_AsVoidPtr(obj); }
+#endif
+#endif

@@ -1,20 +1,26 @@
 /**
  * Read the 3D volume and return ny*nx
  * */
-int vol_setvol(VOLID_t id, const float *data)
+int vol_setvol(VOLID_t id, const void *data)
 {
     protium_volid_t *vol = id;
     if(!(vol->flag & VOL_FLAG_WRITE))
         vol_write_header(id);
 
     vol_head_t *h = &vol->header;
-    int64_t data_size, data_read;
+    int64_t data_size, data_read, file_seek;
+    file_seek = sizeof(vol_head_t);
     data_size = ((int64_t)h->ny)*h->nx*h->nz*sizeof(float);
-    data_read = pwrite(vol->fid, data, data_size, sizeof(vol_head_t));
-    if(data_read!=data_size) {
-        printf("%s: expect to write %ld but write %ld\n", __func__,
-            data_size, data_read);
-        abort();
+    while(data_size!=0) {
+        data_read = pwrite(vol->fid, data, data_size, file_seek);
+        if(data_read==(-1)) {
+            printf("%s: expect to write %ld but write %ld\n", __func__,
+                data_size, data_read);
+            abort();
+        }
+        data_size -= data_read;
+        file_seek += data_read;
+        data = (void*)data+data_read;
     }
     return h->ny*h->nx;
 }
@@ -33,7 +39,8 @@ static PyObject * pyvol_setvol(PyObject __attribute__((unused)) *self, PyObject 
     protium_volid_t *vol;
     if(!PyArg_ParseTuple(args, "OO", &db, &data))
         return NULL;
-    vol = PyCapsule_GetPointer(db, NULL);
+    //vol = PyCapsule_GetPointer(db, NULL);
+    vol = pyvol_obj2ptr(db);
     
     int nd;
     npy_intp *dims;
@@ -47,6 +54,8 @@ static PyObject * pyvol_setvol(PyObject __attribute__((unused)) *self, PyObject 
     }
     if(NPY_FLOAT!=PyArray_TYPE((PyArrayObject*)data)) {
         printf("%s: array type is not correct!\n", __func__);
+        int type=PyArray_TYPE((PyArrayObject*)data);
+        printf("type=%d expect=%d\n", type, NPY_FLOAT);
         abort();
     }
     void *psrc = PyArray_DATA((PyArrayObject*)data);

@@ -15,9 +15,9 @@ typedef struct protium_volid_struct * VOLID_t;
  * */
 int vol_open(VOLID_t *id, const char *path, int flag);
 int vol_getdim(VOLID_t id, int *ny, int *nx, int *nz);
-int vol_getvol(VOLID_t id, float *vol);
+int vol_getvol(VOLID_t id, void *vol);
 int vol_setdim(VOLID_t id, int ny, int nx, int nz);
-int vol_setvol(VOLID_t id, const float *vol);
+int vol_setvol(VOLID_t id, const void *vol);
 int vol_close(VOLID_t id);
 
 /**

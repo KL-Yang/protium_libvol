@@ -30,7 +30,8 @@ static PyObject * pyvol_setdim(PyObject __attribute__((unused)) *self, PyObject 
     int ny, nx, nz;
     protium_volid_t *id;
     PyArg_ParseTuple(args, "Oiii", &db, &ny, &nx, &nz);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     vol_setdim(id, ny, nx, nz);
     Py_INCREF(Py_True);
@@ -48,7 +49,8 @@ static PyObject * pyvol_sety(PyObject __attribute__((unused)) *self, PyObject *a
     protium_volid_t *id;
     int fy; float y0, dy;
     PyArg_ParseTuple(args, "Offi", &db, &y0, &dy, &fy);
-    id = PyCapsule_GetPointer(db, NULL);
+    //id = PyCapsule_GetPointer(db, NULL);
+    id = pyvol_obj2ptr(db);
     
     vol_sety(id, y0, dy, fy);
     Py_INCREF(Py_True);
