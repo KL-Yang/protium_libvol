@@ -20,6 +20,7 @@ static PyMethodDef pyvolMethods[] = {
     {"getx",      pyvol_getx,     METH_VARARGS, "Get x dimension."},
     {"getz",      pyvol_getz,     METH_VARARGS, "Get z dimension."},
     {"getvol",    pyvol_getvol,   METH_VARARGS, "Get 3D volume."},
+    {"pgetvol",   pyvol_pgetvol,  METH_VARARGS, "Partial Get 2D volume."},
     {"setdim",    pyvol_setdim,   METH_VARARGS, "Set dimension."},
     {"setvol",    pyvol_setvol,   METH_VARARGS, "Set 3D volume."},
     {"sety",      pyvol_sety,     METH_VARARGS, "Set y dimension."},

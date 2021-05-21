@@ -65,4 +65,23 @@ static PyObject * pyvol_getvol(PyObject __attribute__((unused)) *self, PyObject 
     vol_getvol(vol, pdes);
     return data;
 }
+
+static PyObject * pyvol_pgetvol(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db, *data;
+    protium_volid_t *vol;
+    long long first, num;
+    if(!PyArg_ParseTuple(args, "OLL", &db, &first, &num))
+        return NULL;
+    //vol = PyCapsule_GetPointer(db, NULL);
+    vol = pyvol_obj2ptr(db);
+
+    npy_intp dims[2];
+    dims[0] = num;
+    dims[1] = vol->header.nz;
+    data = PyArray_SimpleNew(2, dims, NPY_FLOAT);
+    void *pdes = PyArray_DATA((PyArrayObject*)data);
+    vol_pgetvol(vol, pdes, first, num);
+    return data;
+}
 #endif
