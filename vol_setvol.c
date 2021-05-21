@@ -83,4 +83,37 @@ static PyObject * pyvol_setvol(PyObject __attribute__((unused)) *self, PyObject 
     Py_INCREF(Py_True);
     return Py_True;
 }
+
+static PyObject * pyvol_psetvol(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db, *data;
+    protium_volid_t *vol;
+    long long first, num;
+    if(!PyArg_ParseTuple(args, "OOLL", &db, &data, &first, &num))
+        return NULL;
+    //vol = PyCapsule_GetPointer(db, NULL);
+    vol = pyvol_obj2ptr(db);
+    
+    int nd;
+    npy_intp *dims;
+    nd = PyArray_NDIM((PyArrayObject*)data);
+    dims = PyArray_DIMS((PyArrayObject*)data);
+    vol_head_t *h = &vol->header;
+    if(((nd==3) && (dims[0]*dims[1]!=num || dims[2]!=h->nz))
+            || ((nd==2) && (dims[0]!=num || dims[1]!=h->nz))) {
+        printf("%s: array dimension is not correct!\n", __func__);
+        abort();
+    }
+    if(NPY_FLOAT!=PyArray_TYPE((PyArrayObject*)data)) {
+        printf("%s: array type is not correct!\n", __func__);
+        int type=PyArray_TYPE((PyArrayObject*)data);
+        printf("type=%d expect=%d\n", type, NPY_FLOAT);
+        abort();
+    }
+    void *psrc = PyArray_DATA((PyArrayObject*)data);
+    vol_psetvol(vol, psrc, first, num);
+    Py_INCREF(Py_True);
+    return Py_True;
+}
+
 #endif

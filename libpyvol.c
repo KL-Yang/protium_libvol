@@ -23,6 +23,7 @@ static PyMethodDef pyvolMethods[] = {
     {"pgetvol",   pyvol_pgetvol,  METH_VARARGS, "Partial Get 2D volume."},
     {"setdim",    pyvol_setdim,   METH_VARARGS, "Set dimension."},
     {"setvol",    pyvol_setvol,   METH_VARARGS, "Set 3D volume."},
+    {"psetvol",   pyvol_psetvol,  METH_VARARGS, "Partial Set 2D volume."},
     {"sety",      pyvol_sety,     METH_VARARGS, "Set y dimension."},
     {"close",     pyvol_close,    METH_VARARGS, "Close SU dataset."},
     {NULL, NULL, 0, NULL} /* Sentinel */
