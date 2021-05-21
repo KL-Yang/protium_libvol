@@ -1,3 +1,19 @@
+static void safe_pwrite(int fd, const void *buf, size_t count, off_t offset)
+{
+    ssize_t io_size;
+    while(count>0) {
+        io_size = pwrite(fd, buf, count, offset);
+        if(io_size==(-1)) {
+            printf("%s: expect to write %ld but get %ld\n", 
+                    __func__, count, io_size);
+            abort();
+        }
+        buf    += io_size;
+        offset += io_size;
+        count  -= io_size;
+    }
+}
+
 /**
  * Read the 3D volume and return ny*nx
  * */
@@ -7,21 +23,10 @@ int vol_setvol(VOLID_t id, const void *data)
     if(!(vol->flag & VOL_FLAG_WRITE))
         vol_write_header(id);
 
+    int64_t data_size;
     vol_head_t *h = &vol->header;
-    int64_t data_size, data_read, file_seek;
-    file_seek = sizeof(vol_head_t);
     data_size = ((int64_t)h->ny)*h->nx*h->nz*sizeof(float);
-    while(data_size!=0) {
-        data_read = pwrite(vol->fid, data, data_size, file_seek);
-        if(data_read==(-1)) {
-            printf("%s: expect to write %ld but write %ld\n", __func__,
-                data_size, data_read);
-            abort();
-        }
-        data_size -= data_read;
-        file_seek += data_read;
-        data = (void*)data+data_read;
-    }
+    safe_pwrite(vol->fid, data, data_size, sizeof(vol_head_t));
     return h->ny*h->nx;
 }
 
