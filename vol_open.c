@@ -1,3 +1,6 @@
+#ifndef C_VOL_OPEN_PROTIUM_LIBVOL
+#define C_VOL_OPEN_PROTIUM_LIBVOL
+
 int vol_open(VOLID_t *id, const char *path, int flag)
 {
     protium_volid_t *vol = *id = calloc(1, sizeof(protium_volid_t));
@@ -64,4 +67,6 @@ static PyObject * pyvol_open(PyObject __attribute__((unused)) *self, PyObject *a
     db = pyvol_ptr2obj(id);
     return db;
 }
+#endif
+
 #endif
